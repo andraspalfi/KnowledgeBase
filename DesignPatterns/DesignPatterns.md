@@ -1,32 +1,54 @@
 # Design Patterns and Principles
 
+- [Design Patterns and Principles](#design-patterns-and-principles)
+- [Basic Definitions](#basic-definitions)
+- [GoF Design patterns](#gof-design-patterns)
+  - [Creational patterns](#creational-patterns)
+  - [Structural Patterns](#structural-patterns)
+  - [Behavioral Patterns](#behavioral-patterns)
+- [Other design patterns](#other-design-patterns)
+  
+   
+
+  
 This article is a cheat sheet of the most used design patterns and principles. This was not made to teach you. This was made to make you remember what you already understood.
 Other sources to learn and understand more:  
-    - THE GoF book: Design Patterns - elements of reusable object-oriented software  
-    - [sourcemaking.com](https://sourcemaking.com/design_patterns)
-
+- THE GoF book: _Design Patterns - elements of reusable object-oriented software_  
+- [design patterns at sourcemaking.com](https://sourcemaking.com/design_patterns)
+- [wikipedia](https://en.wikipedia.org/wiki/Software_design_pattern)
+  
 > Note: It is very important not to try to use a given pattern as it is. Perhaps you just want to use the wrong pattern. Always adapt them to the requirements to solve a given task. It is very frequent that more patterns are used together to achieve the goal.  
 
 > There are patterns which are similar to other patterns. The intention why to choose one, how to use one, what to solve with one makes the difference.
 
-## Basic Definitions
-Several design patterns based on the followings:
+# Basic Definitions
+Several design patterns based on the following key concepts:
 
-### Interface
-Interface is a structure of a type (usually a class) without a specific implementation. It is a **contract** between two objects. Interfaces usually are declared by objects to 'delegate' some functionality (see `Inversion of control` for more detail). Specifies what methods an object can have - but does not specify the behaviour. Different classes implements the interface providing different behaviours.
+<details><summary>Interface: a structure of a type</summary>
+  
+ (usually a class) without a specific implementation. It is a **contract** between two objects. Interfaces usually are declared by objects to 'delegate' some functionality (see `Inversion of control` for more detail). Specifies what methods an object can have - but does not specify the behaviour. Different classes implements the interface providing different behaviours.
+</details>
 
-### Wrapper
-Holds reference to an other object. Sometimes it means the owner manages the lifetime of that object as well, sometimes just a simple reference to use it. To make it flexible this reference is kept using an `interface` instead.
+<details><summary>Wrapper: holds reference to an other object.</summary>
+ Sometimes it means the owner manages the lifetime of that object as well, sometimes just a simple reference to use it. To make it flexible this reference should be kept using an `interface` instead. 
+</details>
 
-### Delegation
-Move certain functionality to another class or use functionality of another class. The purpose can be to ask for some data or to perform an action (transport the data). Apply it using the `wrapper`.
+<details><summary>Delegation: move/use functionality of another class.</summary>
+    
+The purpose can be to ask for some data or to perform an action (transport the data). Apply it using the `wrapper`.
+</details>
 
-### Factory
+<details><summary>Factory: a method/class which creates objects</summary>
+
 Factory is a method (or a class with more methods) which has the only task to manage the creation of other classes. Factory usually provides objects through interface.
 See `Factory method` and/or `Abstract factory` for more details.
 
+</details>
+
+---
+
 # GoF Design patterns
-GoF is the abbreviation of `Gang of Four` - after the four authors of one of the most fundamental design patterns book.
+GoF is the abbreviation of _**Gang of Four**_ - after the four authors of one of the most fundamental design patterns book.
 There are three different kinds of pattern based on their tasks:
 * Creational patterns: how objects can be created/accessed
 * Structural patterns: how objects can be bind together
@@ -72,7 +94,7 @@ _"Define an interface for creating an object, but let subclasses decide which cl
 Put a dedicated method to a class (_Creator_) which creates the Product. Creator also can contain other methods which is used with Product. The subclass of Creator will implement the method and create the specific Product instance.
 </details>
 
-<details><summary>Prototype: create new instances by copying and existing one</summary>  
+<details><summary>Prototype: create new instances by copying an existing one</summary>  
 
 Create new instances of a class using an existing one by cloning/copying it. Very useful, when the creation of new instances needs in runtime while the classes are referenced by an interface/base-class.
 </details>
@@ -155,7 +177,7 @@ Subcases:
 - **remote proxy**: provides a local representation of a remote object in a different address space like network, database etc.
 - **virtual proxy**: create the wrapped object on demand – lazy binding. 
 - **protection proxy**: filter the access to an object
-- **smart pointer**: useful reference counting and lifetime management; thread locking
+- **smart proxy**: the proxy performs some additional functionality; useful for reference counting and lifetime management (smart pointer); thread locking etc
 
 </details>
 
@@ -253,6 +275,44 @@ Given a _composite_ strcture containing different, related types of classes. Wit
 - create different visitors performing different tasks with the items
 - apply/perform a given visitor instance passing it to composite. It calls all the items' _accept_ method which just calls the appropriate _visit_ method on it.
 
+</details>
 
+---  
+
+
+# Other design patterns
+
+<details><summary>Object Pool: limit the number of objects</summary>
+
+There are situations when the number of objects must be limited. Use a dedicated object which controls the instances available of (another) object. Can be a separate object store but can be implemented on the class itself as static method.  
+`YourClass.getFreeObject()` can return null or can block the call waiting for the next available instance.   
+The user of an object must _release_ the instance when finished.
+
+Object pool can also behave in a way that always creates a new instance but it is also possible to push an unused object into it so next time it returns with the existing object instead of creates a new one.
+
+Independent object store can store different types of objects. Passing the type (or using generics) the proper type of instance can be retrieved.
+
+As en example think of _thread pools_ or _network request pools_
+</details>
+
+<details><summary>Multitone: more instance of a type referenced by key</summary>
+
+Similar to _singleton_, multitone however supports more instances. The access of the objects are bound to a _key_.   
+Different instances of course have different states. Based on implementation it can have different behavior etc.
+
+</details>
+
+<details><summary>Private class data, pImpl (pointer to implementation: hide data/code in a membber, the type of member is hidden/unkown - only private implementation sees</summary>
+
+This design patterns used mostly in languages where the structure of private members are visible (c++, Objective-C etc)  
+In this languages a "forward declaration", an empy name declaration is enough to represent the storage of a data or functional object in a member. It can be a non-typed representation as well (void*);
+
+The implementation internally can use the _pImpl_ instance or even just forward the calls to it. 
+
+</details>
+
+<details><summary>Null object: provide a simplistic, empty, default implementation for an interface/abstract class</summary>
+
+When an object must reference something but it can be "empty" instead of using Null/Nil as referene and alwasy check the existance, provide a very primitive, empty implementation as a placeholder.
 
 </details>
