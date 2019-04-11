@@ -1,6 +1,6 @@
-# Design Patterns and Principles
+Design Patterns quick overview <!-- omit in toc -->
+===
 
-- [Design Patterns and Principles](#design-patterns-and-principles)
 - [Basic Definitions](#basic-definitions)
 - [GoF Design patterns](#gof-design-patterns)
   - [Creational patterns](#creational-patterns)
@@ -11,11 +11,11 @@
    
 
   
-This article is a cheat sheet of the most used design patterns and principles. This was not made to teach you. This was made to make you remember what you already understood.
-Other sources to learn and understand more:  
-- THE GoF book: _Design Patterns - elements of reusable object-oriented software_  
-- [design patterns at sourcemaking.com](https://sourcemaking.com/design_patterns)
-- [wikipedia](https://en.wikipedia.org/wiki/Software_design_pattern)
+This article is a cheat sheet of the most used design patterns. This was not made to teach you. This was made to make you remember what you already understood.  
+Other sources to learn and understand more:
+   - THE GoF book: _Design Patterns - elements of reusable object-oriented software_  
+   - [design patterns at sourcemaking.com](https://sourcemaking.com/design_patterns)
+   - [wikipedia](https://en.wikipedia.org/wiki/Software_design_pattern)
   
 > Note: It is very important not to try to use a given pattern as it is. Perhaps you just want to use the wrong pattern. Always adapt them to the requirements to solve a given task. It is very frequent that more patterns are used together to achieve the goal.  
 
@@ -297,12 +297,16 @@ As en example think of _thread pools_ or _network request pools_
 
 <details><summary>Multitone: more instance of a type referenced by key</summary>
 
-Similar to _singleton_, multitone however supports more instances. The access of the objects are bound to a _key_.   
+Similar to _singleton_, multitone however supports more instances. The access of the objects are bound to a _key_.  
 Different instances of course have different states. Based on implementation it can have different behavior etc.
+
+A case of _multitone_ which provides the objects where the input is a type (type can be input parameter or methods can be _generic_).
 
 </details>
 
-<details><summary>Private class data, pImpl (pointer to implementation: hide data/code in a membber, the type of member is hidden/unkown - only private implementation sees</summary>
+<details><summary>Private class data / Opaque pointer / pImpl: hide data/code in a membber</summary>  
+  
+pImpl (pointer to implementation): the details of the type of member is hidden/unkown - only private implementation knows it.  
 
 This design patterns used mostly in languages where the structure of private members are visible (c++, Objective-C etc)  
 In this languages a "forward declaration", an empy name declaration is enough to represent the storage of a data or functional object in a member. It can be a non-typed representation as well (void*);
@@ -314,5 +318,10 @@ The implementation internally can use the _pImpl_ instance or even just forward 
 <details><summary>Null object: provide a simplistic, empty, default implementation for an interface/abstract class</summary>
 
 When an object must reference something but it can be "empty" instead of using Null/Nil as referene and alwasy check the existance, provide a very primitive, empty implementation as a placeholder.
+
+</details>
+
+<details><summary>Repository pattern</summary>  
+  
 
 </details>
