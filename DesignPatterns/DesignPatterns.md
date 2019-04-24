@@ -7,16 +7,16 @@ Design Patterns quick overview <!-- omit in toc -->
   - [Structural Patterns](#structural-patterns)
   - [Behavioral Patterns](#behavioral-patterns)
 - [Other design patterns](#other-design-patterns)
-  
-   
 
-  
+
+
+
 This article is a cheat sheet of the most used design patterns. This was not made to teach you. This was made to make you remember what you already understood.  
 Other sources to learn and understand more:
    - THE GoF book: _Design Patterns - elements of reusable object-oriented software_  
    - [design patterns at sourcemaking.com](https://sourcemaking.com/design_patterns)
    - [wikipedia](https://en.wikipedia.org/wiki/Software_design_pattern)
-  
+
 > Note: It is very important not to try to use a given pattern as it is. Perhaps you just want to use the wrong pattern. Always adapt them to the requirements to solve a given task. It is very frequent that more patterns are used together to achieve the goal.  
 
 > There are patterns which are similar to other patterns. The intention why to choose one, how to use one, what to solve with one makes the difference.
@@ -25,16 +25,16 @@ Other sources to learn and understand more:
 Several design patterns based on the following key concepts:
 
 <details><summary>Interface: a structure of a type</summary>
-  
+
  (usually a class) without a specific implementation. It is a **contract** between two objects. Interfaces usually are declared by objects to 'delegate' some functionality (see `Inversion of control` for more detail). Specifies what methods an object can have - but does not specify the behaviour. Different classes implements the interface providing different behaviours.
 </details>
 
-<details><summary>Wrapper: holds reference to an other object.</summary>
- Sometimes it means the owner manages the lifetime of that object as well, sometimes just a simple reference to use it. To make it flexible this reference should be kept using an `interface` instead. 
+<details><summary>Wrapper: holds reference to an other object, uses it for something.</summary>
+ Sometimes it means the owner manages the lifetime of that object as well, sometimes just a simple reference to use it. To make it flexible this reference should be kept using an `interface` instead.
 </details>
 
 <details><summary>Delegation: move/use functionality of another class.</summary>
-    
+
 The purpose can be to ask for some data or to perform an action (transport the data). Apply it using the `wrapper`.
 </details>
 
@@ -90,7 +90,7 @@ For example: HouseBuilder: addWall, addWindow, addDoor, create/get House
 <details><summary>Factory method: create an instance of some class conforming to a given interface or base class; subclasses can return with different instances</summary>  
 
 _"Define an interface for creating an object, but let subclasses decide which class to instantiate"_  
-  
+
 Put a dedicated method to a class (_Creator_) which creates the Product. Creator also can contain other methods which is used with Product. The subclass of Creator will implement the method and create the specific Product instance.
 </details>
 
@@ -114,7 +114,7 @@ Instance of a class can be accessed through only one dedicated 'static/class' me
 <details><summary>Adapter: make classes compatible with another class, interface</summary>  
 
 Implement an interface for a class to make it compatible with another class which wants to use the first class.  
-  
+
 Two kinds:  
 - **Class adapter**: use multiple inheritance/interface implementation to implement the new interface while subclassing the original class.  
 - **Object adapter**: create a new class implementing the desired interface and encapsulate (`wrapper`) the original class holding reference to it in a member. In the interface-methods call the methods of the encapsulated class (see: `proxy`).
@@ -129,13 +129,13 @@ Useful when the same functionality for problems has to be implemented to more pl
 For example build houses, where the structure always the same, but perhaps you use different bricks. So you have a house builder which has an internal wall builder which puts together the bricks. If everything hard coded you implement two house builders but the majority of the code is duplications. To get rid of code duplications the easiest way is to replace only the bricks which are used to build the house.  
 The same is drawing shapes on different systems. It is enough to define some basic operations (draw line, draw curve) and then implement the draw shape methods (rect, triangle, circle, more complex stuff) using these basic operations.
 
-In short: delegate the basic operations, then implement what you need using abstract references to that basic operations. 
+In short: delegate the basic operations, then implement what you need using abstract references to that basic operations.
 </details>
 
 <details><summary>Composite: build a hierarchy</summary>  
 
 Compose objects to hierarchies by using a base class/interface which contains the very basic mandatory operations to manage the hierarchy and perform basic operations.
-  
+
 Declare node classes and leaf classes. Calling a basic operation on a node will forward the same call to all its children. Hierarchy management operations will work only on node items.
 </details>
 
@@ -144,7 +144,7 @@ Declare node classes and leaf classes. Calling a basic operation on a node will 
 It helps to add functionality dymaically and you can vary the features independently!
 
 For compatibility reason the classes need a base class/interface.  
-*Decorator* keeps a reference to the 
+*Decorator* keeps a reference to the
 All operations called on the decorator will be forwarded to the wrapped class but performing additional operations before and/or after the forwarded call.
 
 </details>
@@ -158,13 +158,13 @@ It is also easier to change the underlying classes.
 </details>
 
 <details><summary>Flyweight: share expensive objects among class instances</summary>  
-  
+
 Share the expensive objects (*flyweights*) among instances if there are numerous elements in a system which use the same components.  
 Do not store object specific states in the *flyweights* but pass the actual state to them on use.
 
 - *Client* can store the states and pass them to *flyweights* when needed.  
-- An other aspect that the *client* only references light flwyweight objects which stores the state and calls the real flyweights (expensive objects stored by *flyweight pool*) and the real flywights are invisible for *client*. 
-  
+- An other aspect that the *client* only references light flwyweight objects which stores the state and calls the real flyweights (expensive objects stored by *flyweight pool*) and the real flywights are invisible for *client*.
+
 Can be very useful for example to image caches. It is possible to remove unnecessary images from memory and load them on demand even if the 'image flyweight' object is referenced by the system since that only references a container (*flyweight pool*) which stores the real image.
 
 </details>
@@ -175,7 +175,7 @@ Wrap the original object into the proxy and forward every call to it. Proxy has 
 
 Subcases:  
 - **remote proxy**: provides a local representation of a remote object in a different address space like network, database etc.
-- **virtual proxy**: create the wrapped object on demand – lazy binding. 
+- **virtual proxy**: create the wrapped object on demand – lazy binding.
 - **protection proxy**: filter the access to an object
 - **smart proxy**: the proxy performs some additional functionality; useful for reference counting and lifetime management (smart pointer); thread locking etc
 
@@ -184,15 +184,15 @@ Subcases:
 ## Behavioral Patterns
 
 <details><summary>Chain of Responsibility: Chain the receiving objects and pass the request along the chain until one handles it</summary>  
-  
-Base on the original pattern description the objects are composed to a chain. When an item is called it handles the message or it calls the base class implementation, which by default calls the next item in the chain. For that all items in the chain must be a subclass of a specific base class. 
+
+Base on the original pattern description the objects are composed to a chain. When an item is called it handles the message or it calls the base class implementation, which by default calls the next item in the chain. For that all items in the chain must be a subclass of a specific base class.
 
 Can be implemented however otherwise where the object in teh chain just returns whether the message was handled or not and the caller (parent object) knows who to call next. Can be used with iterator.
 
 </details>
 
-<details><summary>Command: encapsulate _requests_ as objects instead of method call on an object with specific parameters</summary> 
-  
+<details><summary>Command: encapsulate _requests_ as objects instead of method call on an object with specific parameters</summary>
+
 Encapsulate a request as an object: the _command_ should encapsulate the _receiver_ and the _parameters_. _Client_ just calls the _execute_ method. It is possible to queue or log requests, command can encapsulate its _reverse_ operation to support _undo_.
 
 Another variation when only the parameters are stored in a _command_ object and using _chain of responsibility_ we let someone to handle it. Operating systems' user interfaces work this way.
@@ -201,21 +201,21 @@ Another variation when only the parameters are stored in a _command_ object and 
 <details><summary>Interpreter: define a language with its interpreter (processor)</summary>  
 
 Define a language representation for its grammar along with an interpreter that uses the representation to interpret sentences in the language.  
-The _language_ can be letters, numbers or even color codes. 
+The _language_ can be letters, numbers or even color codes.
 
 Interpreter always pass the state to the next interpreter. Usually implemented with _Composite_.
 
 </details>
 
 <details><summary>Iterator: provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation </summary>  
-   
+
 Given aggregate objects (_array, dictionary, lists, trees etc_) and walk though each item one by one without knowing the internal structure. It is also possible to walk through items from one to the last or reversed order or using any specific rule (items conforming to a rule).
 
 Define an interface with _next()_ method.   
-Let's create a new _iterator_ classes for each storage (and rule) which knows the internal structure of the collection and has access to its items. 
+Let's create a new _iterator_ classes for each storage (and rule) which knows the internal structure of the collection and has access to its items.
 
 _Clients_ can instantiate the proper _iterator_ and call _next()_ accessign all the elements (conforming to a rule, accessing them in the proper order) until the end of the items (_next()_ returns null, or dedicated _finished()_ returns true)
- 
+
 </details>
 
 <details>
@@ -243,9 +243,9 @@ Usually the subject sends out specific messages which the observers catch/handle
 
 <details><summary>State: instead of conditions everywhere in the code use separated objects with the same API but different behavior according to state.
 </summary>  
-  
+
 Use, when the state of an object changes at runtime and it is hard to use conditions everywhere in the code.  
-The _client_ holds reference to the _context_ class which is technically a proxy providing the same API as all the _state_ objects used internally in _context_. The context class holds reference to a specific state object and forward every call to it. If the state should change the context class will reference another _state_ class. 
+The _client_ holds reference to the _context_ class which is technically a proxy providing the same API as all the _state_ objects used internally in _context_. The context class holds reference to a specific state object and forward every call to it. If the state should change the context class will reference another _state_ class.
 
 </details>
 
@@ -261,16 +261,16 @@ _Delegation_: client delegates the functionality to a strategy
 
 <details><summary>Template method: define abstract/virtual methods what subclasses must implement</summary>
 
-Different subclasses can implement the _template method_ differently. 
+Different subclasses can implement the _template method_ differently.
 
 Prefer _strategy_ and delegation instead.
 
 </details>
 
 <details><summary>Visitor: perform tasks for instances of different types of classes in a composite structure without type casting using method overload</summary>  
-  
+
 Given a _composite_ strcture containing different, related types of classes. Without extending the classes let to perform different tasks.
-- The original classes declares a special method - _accept_(_visitor_) where _visitor_ is an interface/base class with methods: _visit_(_type_) where the _visit_ method overloaded with **all** the types in the composite. 
+- The original classes declares a special method - _accept_(_visitor_) where _visitor_ is an interface/base class with methods: _visit_(_type_) where the _visit_ method overloaded with **all** the types in the composite.
 - _accept_ only calls the appropriate _visit_() method selected by the compiler based on type
 - create different visitors performing different tasks with the items
 - apply/perform a given visitor instance passing it to composite. It calls all the items' _accept_ method which just calls the appropriate _visit_ method on it.
@@ -305,13 +305,13 @@ A case of _multitone_ which provides the objects where the input is a type (type
 </details>
 
 <details><summary>Private class data / Opaque pointer / pImpl: hide data/code in a membber</summary>  
-  
+
 pImpl (pointer to implementation): the details of the type of member is hidden/unkown - only private implementation knows it.  
 
 This design patterns used mostly in languages where the structure of private members are visible (c++, Objective-C etc)  
 In this languages a "forward declaration", an empy name declaration is enough to represent the storage of a data or functional object in a member. It can be a non-typed representation as well (void*);
 
-The implementation internally can use the _pImpl_ instance or even just forward the calls to it. 
+The implementation internally can use the _pImpl_ instance or even just forward the calls to it.
 
 </details>
 
@@ -322,6 +322,6 @@ When an object must reference something but it can be "empty" instead of using N
 </details>
 
 <details><summary>Repository pattern</summary>  
-  
+
 
 </details>
